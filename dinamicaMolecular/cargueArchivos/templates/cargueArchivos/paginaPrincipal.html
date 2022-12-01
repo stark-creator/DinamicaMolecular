@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django File Upload</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+        * {
+            font-family: "Roboto";
+        }
+
+        body {
+            background-color: #F5F5F5;
+        }
+
+        form {
+            background-color: #FFFFFF;
+            padding: 25px;
+        }
+
+        table {
+            width: 150%; 
+            text-align: center;
+            margin-top: 25px;
+            padding: 25px;
+            background-color: #FFFFFF;
+        }
+
+        table tr td {
+            padding-top: 15px;            
+        }
+    </style>
+</head>
+<body>
+    <form action="{% url 'cargueArchivos:cargueArchivos' %}" method="POST" enctype="multipart/form-data">
+        <div>
+        <input type="text" name="fileTitle" placeholder="Nombre su proteína">
+
+   {% csrf_token %}
+        <input type="file" name="uploadedFile">
+    </div>
+
+    <div>
+            <input type="submit" value="Cargar">
+    </div>
+    </form>
+    <table>
+    <tr>
+        <tr>
+            <th style="width:15px">ID</th>
+            <th style="width:15px">Title</th>
+            <!-- <th style="width:10px">Ubicación</th> -->
+            <th style="width: 15px">Fecha y hora de carga</th>
+            
+            
+            <th style="width:15px"> Editar </th>
+            <th style="width:5px">     </th>
+            <th> Vista previa </th>
+        </tr>
+        {% for file in files %}
+            <tr>
+                <td>{{ file.id }} </td>
+                <td>{{ file.title }}</td>
+                <!-- <td>{{ file.uploadedFile.url }}</td> -->
+                <td>{{ file.dateTimeOfUpload }}></td>
+                <td > <div><label for = "editar"> Seleccione el elemento a editar</label></div>
+                     <div><select name= "editar" id = "editar"></div>
+                    <option value="ALL">Ver documento completo</option>
+                     <option value="ATOM">ATOM</option>
+                     <option value="HETEROATOM">HETERO ATOM</option>
+                     <option value="AMINOÁCIDOS">AMINOACIDOS</option></select>
+                     <td style="width:5px"> <input type="button" value="Mostrar"> </td>
+                </td>
+                <td>   Aquí se muestra el archivo pdb </td>
+            
+            </tr>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>  </th>
+
+    </tr>
+    </table>
+    
+
+
+        
+    
+
+
+
+</body>
+</html>
+
